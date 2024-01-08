@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .chat-frame {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f5f5f5;
+            max-width: 500px;
+        }
+        
+        .textbox {
+            flex: 1;
+            height: 40px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            overflow: visible;
+        }
+
+        .extractbtn {
+            width: 80px;
+            height: 30px;
+            margin-left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>GPT-3.5 Keyphrase extractor</h2>
+    <div class="chat-frame">
+        <textarea type="text" id="input" class="textbox" placeholder="Type a message"></textarea>
+        <button id="post" class="extractbtn">Send</button>
+    </div>
+    <h3>Output</h3>
+    <p id="output"></p>
+    <script>
+        const postBtn = document.getElementById('post')
+        const input = document.getElementById('input')
+        const output = document.getElementById('output')
+
+        const baseUrl = 'http://localhost:8383/'
+
+        postBtn.addEventListener('click', postInfo)
+
+        async function postInfo(e) {
+        e.preventDefault()
+        if (input.value === '') return
+
+        const request = await fetch(baseUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            parcel: input.value
+            })
+        })
+
+        // Start polling for the response
+        pollForResponse()
+        }
+
+        async function pollForResponse() {
+        let response = await fetch(baseUrl + 'info', {
+            method: 'GET'
+        })
+
+        while (response.status !== 200) {
+            // If the response is not ready yet, wait for a certain interval before sending the next request
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            response = await fetch(baseUrl + 'info', {
+            method: 'GET'
+            })
+        }
+
+        const data = await response.json()
+        output.textContent = data.info
+        }
+
+        input.addEventListener('input', resizeTextarea)
+        function resizeTextarea() {
+        this.style.height = 'auto'
+        this.style.height = this.scrollHeight + 'px'
+        }
+    </script>
+</body>
+</html>
