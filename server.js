@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai")
 
 const configuration = new Configuration({
-  apiKey: "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"
+  apiKey: "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"     // Don't worries. This API key is from taobao
 })
 const openai = new OpenAIApi(configuration)
 
