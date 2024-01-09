@@ -28,3 +28,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.outputt{
+    white-space: pre-wrap; /* Enable word wrapping */
+    word-wrap: break-word; /* Break long words if necessary */
+}

@@ -20,7 +20,7 @@ async function postInfo(e) {
         })
     })
 
-    // Start polling for the response
+    // Get the response
     const response = await fetch(baseUrl + 'info', {
         method: 'GET'
     })
