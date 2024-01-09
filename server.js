@@ -3,8 +3,6 @@ const sys_prompt =
 You should only extract keyphrases from user's input and list in numbered list.
 Do not add any explination.
 If the user's input is just 1 word, directly output the input as the output.
-In the paragraph, if you see an "and" linking 2 nouns with 1 adjective in front, help me to pair an adjective for each noun and extract 2 pair of keywords, for example, "simple shapes and colors" should be extracted as "simple shapes" and "simple colors".
-"colorful tiles and patterns" should be extracted as "colorful tiles" and "colorful patterns".
 If verb and noun together, you should keep is as a whole,
 for example, "moving and jumping on the screen" should be 1 keyword, "moving and jumping on the screen".
 `;
@@ -14,7 +12,7 @@ console.log(sys_prompt);
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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"     // Don't worries. This API key is from taobao
+  apiKey: "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"     // Don't worries. This API key is from taobao
 });
 const openai = new OpenAIApi(configuration);
 
